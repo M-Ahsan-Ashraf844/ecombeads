@@ -25,9 +25,11 @@ SECRET_KEY = 'django-insecure-ya*4v^f2=zm5ruyay_jnf-9jr5lf45+g9h@go)07d_18-&9%dk
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["*", ".onrender.com"]
 
-
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.onrender.com"
+]
 # Application definition
 
 INSTALLED_APPS = [
@@ -77,13 +79,12 @@ WSGI_APPLICATION = 'auth.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-import os
 import dj_database_url
+import os
 
-# Database
 DATABASES = {
-    'default': dj_database_url.config(
-        default='sqlite:///db.sqlite3',  # fallback for local
+    'default': dj_database_url.parse(
+        os.environ.get("DATABASE_URL"),
         conn_max_age=600,
         ssl_require=True
     )
