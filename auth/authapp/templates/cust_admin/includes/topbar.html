@@ -1,0 +1,104 @@
+
+
+<header class="fixed top-0 left-0 right-0 z-40 bg-white/80 dark:bg-gray-800/70 backdrop-blur border-b border-gray-200 dark:border-gray-700">
+  
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="flex h-14 items-center justify-between gap-4">
+
+      <!-- Left side (Logo + Menu button) -->
+      <div class="flex items-center gap-3">
+        <!-- Mobile Menu Button -->
+        <button id="btnMenu" aria-label="Toggle menu" 
+          class="lg:hidden p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+              d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+
+        <!-- Logo -->
+        <div class="flex items-center gap-2">
+          <div class="h-8 w-8 rounded-xl bg-gradient-to-tr from-primary to-accent shadow-md"></div>
+          <div class="leading-4 hidden sm:block">
+            <div class="text-sm font-bold text-primary dark:text-primary">Nova Admin</div>
+            <div class="text-xs text-gray-500 dark:text-gray-400">Dashboard</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Search Bar (hidden on mobile) -->
+      <div class="hidden md:flex flex-1 max-w-2xl">
+        <label class="relative w-full">
+          <span class="sr-only">Search</span>
+          <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z"/>
+            </svg>
+          </span>
+          <input id="searchInput" 
+            class="w-full rounded-xl border border-gray-200 bg-white/60 px-10 py-2 text-sm 
+            placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/40 
+            dark:bg-gray-800 dark:border-gray-700" 
+            placeholder="Search orders, customers, products..." />
+        </label>
+      </div>
+
+      <!-- Right side buttons -->
+      <div class="flex items-center gap-2">
+        <!-- Dark/Light Toggle -->
+        <button id="themeToggle" title="Toggle dark / light" 
+          class="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+          <svg id="iconLight" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+              d="M12 3v1m0 16v1m8.66-9h-1M4.34 12h-1M18.36 5.64l-.7.7M6.34 17.66l-.7.7
+              M18.36 18.36l-.7-.7M6.34 6.34l-.7-.7M12 7a5 5 0 100 10 5 5 0 000-10z"/>
+          </svg>
+          <svg id="iconDark" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+              d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+          </svg>
+        </button>
+
+        <!-- Notifications -->
+        <div class="relative">
+          <button id="notifBtn" 
+            class="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 
+                10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5"/>
+            </svg>
+          </button>
+          <span class="absolute -top-1 -right-1 inline-flex items-center justify-center px-2 py-0.5 
+            text-[10px] font-semibold rounded-full bg-primary text-white">3</span>
+        </div>
+
+        <!-- Profile Dropdown -->
+        <div class="relative">
+          <button id="profileBtn" 
+            class="flex items-center gap-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 
+            px-2 py-1 transition">
+            <img src="https://api.dicebear.com/6.x/initials/svg?seed=Admin" 
+              alt="avatar" 
+              class="w-8 h-8 rounded-full border border-gray-200 dark:border-gray-700" />
+            <span class="hidden sm:block text-sm">Admin</span>
+            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                d="M19 9l-7 7-7-7"/>
+            </svg>
+          </button>
+          <!-- Dropdown Menu -->
+          <div id="profileMenu" 
+            class="hidden absolute right-0 mt-2 w-44 rounded-lg bg-white shadow-lg border border-gray-200 
+            dark:bg-gray-800 dark:border-gray-700 py-1 overflow-hidden">
+            <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-700">Profile</a>
+            <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-700">Settings</a>
+            <div class="border-t border-gray-100 dark:border-gray-700"></div>
+            <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-700">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

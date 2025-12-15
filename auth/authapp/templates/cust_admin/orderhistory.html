@@ -1,0 +1,53 @@
+{% extends "cust_admin/base.html" %}
+
+{% block title %}Order History — Nova Admin{% endblock %}
+
+{% block content %}
+<div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6">
+  <h2 class="text-xl font-bold mb-6">Order History</h2>
+
+  <!-- Table for large screens -->
+  <div class="hidden md:block overflow-x-auto">
+    <table class="min-w-full border-collapse">
+      <thead>
+        <tr class="bg-gray-100 dark:bg-gray-700 text-left text-sm font-semibold">
+          <th class="px-4 py-3 border-b">#</th>
+          <th class="px-4 py-3 border-b">Order No#</th>
+          <th class="px-4 py-3 border-b">Current Status</th>
+          <th class="px-4 py-3 border-b">Status Changed At</th>
+        </tr>
+      </thead>
+      <tbody class="text-sm divide-y divide-gray-200 dark:divide-gray-700">
+        {% for history in histories %}
+        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition">
+          <td class="px-4 py-2">{{ forloop.counter }}</td>
+          <td class="px-4 py-2">#{{ history.order_id.id }}</td>
+          <td class="px-4 py-2 font-medium text-green-600">{{ history.current_status }}</td>
+          <td class="px-4 py-2">{{ history.status_change_at|date:"Y-m-d H:i" }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="5" class="px-4 py-4 text-center text-gray-500">No history found</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Card layout for small screens -->
+  <div class="space-y-4 md:hidden">
+    {% for history in histories %}
+    <div class="border rounded-xl p-4 bg-gray-50 dark:bg-gray-700 shadow-sm">
+      <div class="flex justify-between items-center mb-2">
+        <span class="text-sm text-gray-500">#{{ forloop.counter }}</span>
+        <span class="text-xs text-gray-400">{{ history.status_change_at|date:"Y-m-d H:i" }}</span>
+      </div>
+      <p class="text-sm"><span class="font-semibold">Order ID:</span> #{{ history.order_id.id }}</p>
+      <p class="text-sm"><span class="font-semibold">Current:</span> <span class="font-medium text-green-600">{{ history.current_status }}</span></p>
+    </div>
+    {% empty %}
+    <p class="text-center text-gray-500">No history found</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

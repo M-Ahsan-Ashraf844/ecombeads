@@ -1,0 +1,18 @@
+{% extends "cust_admin/base.html" %}
+{% block content %}
+<div class="max-w-lg mx-auto bg-white dark:bg-gray-800 shadow rounded-lg p-6 mt-6">
+  <h2 class="text-xl font-semibold mb-4">Add Category</h2>
+
+  <form action="{% url 'addcategory' %}" method="POST" class="flex flex-col gap-4">
+    {% csrf_token %}
+    <input type="text" name="name" placeholder="Category Name"
+      class="w-full text-black rounded-lg border border-gray-300 dark:border-gray-600 px-3 py-2 text-sm focus:ring-2 focus:ring-primary/40"
+      required>
+
+    <button type="submit"
+      class="rounded-lg bg-primary text-white px-4 py-2 text-sm hover:opacity-95 transition">
+      Save Category
+    </button>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "cust_admin/base.html" %}
+{% block title %}Customers — Nova Admin{% endblock %}
+
+{% block content %}
+<div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg">
+    <h3 class="text-xl font-semibold mb-6 text-gray-800 dark:text-gray-100 flex items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5V4H2v16h5m10-6a2 2 0 11-4 0 2 2 0 014 0z" />
+      </svg>
+      Customers
+    </h3>
+
+    {% if customer %}
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {% for cust in customer %}
+      <div class="p-5 bg-gray-50 dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 hover:shadow-xl transition duration-300">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-12 h-12 flex items-center justify-center rounded-full bg-indigo-100 dark:bg-indigo-900 text-indigo-600 dark:text-indigo-300 font-bold">
+            {{ cust.customer_name|slice:":1" }}
+          </div>
+          <div>
+            <h4 class="font-semibold text-gray-800 dark:text-gray-100">{{ cust.customer_name }}</h4>
+            <span class="text-xs text-gray-500 dark:text-gray-400">Customer</span>
+          </div>
+        </div>
+
+        <div class="space-y-1 text-sm text-gray-600 dark:text-gray-300">
+          <p><span class="font-medium">📍 Address:</span> {{ cust.customer_address }}</p>
+          <p><span class="font-medium">📞 Phone:</span> {{ cust.customer_number }}</p>
+          <p><span class="font-medium">✉️ Email:</span> <a href="mailto:{{ cust.customer_email }}" class="text-indigo-600 dark:text-indigo-400 hover:underline">{{ cust.customer_email }}</a></p>
+        </div>
+
+        <div class="mt-4 flex gap-2">
+          <a href="#" class="px-3 py-1 text-xs rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition">Edit</a>
+          <a href="#" class="px-3 py-1 text-xs rounded-lg bg-red-500 text-white hover:bg-red-600 transition">Delete</a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-gray-500 dark:text-gray-400 text-sm">No customers found.</p>
+    {% endif %}
+  </div>
+{% endblock %}

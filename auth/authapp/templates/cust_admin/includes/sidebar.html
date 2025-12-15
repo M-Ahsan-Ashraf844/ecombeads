@@ -1,0 +1,136 @@
+<!-- Desktop Sidebar -->
+<aside id="sidebar" 
+  class="hidden lg:block shrink-0 w-64 rounded-xl border border-gray-100 bg-white/70 dark:bg-gray-800/60 dark:border-gray-700 p-3 glass overflow-y-auto max-h-screen">
+  
+  <!-- Navigation -->
+  <div class="mb-4 px-2">
+    <div class="text-xs uppercase text-gray-500 dark:text-gray-400 font-semibold mb-2">Navigation</div>
+    <nav class="space-y-1">
+      {% if user.is_staff %}
+      <a href="{% url 'ad_dashboard' %}" class="navBtn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium hover:bg-primary/10 hover:text-primary transition" data-target="dashboard">
+        <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h18v18H3z"/></svg>
+        Dashboard
+      </a>
+      {% endif %}
+
+      <a href="{% url 'ad_orders' %}" class="navBtn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium hover:bg-primary/10 hover:text-primary transition" data-target="orders">
+        <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h18v6H3zM3 13h18v8H3z"/></svg>
+        Orders
+      </a>
+      <a href="{% url 'ad_customers' %}" class="navBtn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium hover:bg-primary/10 hover:text-primary transition" data-target="customers">
+        <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a4 4 0 00-4-4h-1"/></svg>
+        Customers
+      </a>
+
+      <a href="{% url 'ad_products' %}" class="navBtn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium hover:bg-primary/10 hover:text-primary transition" data-target="products">
+        <svg class="w-5 h-5 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4v6a8 8 0 008 8 8 8 0 008-8V7z"/></svg>
+        Products
+      </a>
+      {% if user.is_staff %}
+
+      <a href="{% url 'orderhistory' %}" class="navBtn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium hover:bg-primary/10 hover:text-primary transition" data-target="orderhistory">
+        <svg class="w-5 h-5 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4v6a8 8 0 008 8 8 8 0 008-8V7z"/></svg>
+        Order History
+      </a>
+      
+      {%endif%}
+    </nav>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="mt-6 px-2">
+    <div class="text-xs uppercase text-gray-500 dark:text-gray-400 font-semibold mb-2">Quick actions</div>
+    <div class="flex flex-col gap-2">
+      {% if user.is_staff %}
+
+      <a href="{% url 'addproduct' %}" class="w-full rounded-lg px-3 py-2 border border-gray-200 dark:border-gray-700 text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition">Add Product</a>
+      <a href="{% url 'addcategory' %}" class="w-full rounded-lg px-3 py-2 border border-gray-200 dark:border-gray-700 text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition">Add Category</a>
+      {% endif %}
+      <a href="{% url 'store' %}" class="w-full rounded-lg px-3 py-2 border border-gray-200 dark:border-gray-700 text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition">Go to Store</a>
+    </div>
+  </div>
+</aside>
+
+<!-- Mobile sidebar (drawer) -->
+<div id="mobileSidebar" class="fixed inset-y-0 left-0 z-40 w-64 transform -translate-x-full transition-transform duration-300 ease-in-out lg:hidden">
+  <div class="h-full rounded-r-xl backdrop-blur-md bg-white/80 dark:bg-gray-900/80 border-r border-gray-200 dark:border-gray-700 p-4 flex flex-col">
+    
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-6">
+      <div class="flex items-center gap-2">
+        <div class="h-9 w-9 rounded-xl bg-gradient-to-tr from-primary to-accent shadow-md"></div>
+        <div class="text-base font-bold">Nova Admin</div>
+      </div>
+      <button id="closeMobile" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Navigation -->
+    <div class="mb-6">
+      <div class="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400 font-semibold mb-2">Navigation</div>
+      <nav class="space-y-2">
+      {% if user.is_staff %}
+
+        <a href="{% url 'ad_dashboard' %}" class="navBtn flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium hover:bg-primary/10 hover:text-primary transition">
+          <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h18v18H3z"/>
+          </svg>
+          Dashboard
+        </a>
+        {% endif %}
+        <a href="{% url 'ad_orders' %}" class="navBtn flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium hover:bg-primary/10 hover:text-primary transition">
+          <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h18v6H3zM3 13h18v8H3z"/>
+          </svg>
+          Orders
+        </a>
+        <a href="{% url 'ad_customers' %}" class="navBtn flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium hover:bg-primary/10 hover:text-primary transition">
+          <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a4 4 0 00-4-4h-1"/>
+          </svg>
+          Customers
+        </a>
+        
+        <a href="{% url 'ad_products' %}" class="navBtn flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium hover:bg-primary/10 hover:text-primary transition">
+          <svg class="w-5 h-5 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4v6a8 8 0 008 8 8 8 0 008-8V7z"/>
+          </svg>
+          Products
+        </a>
+      {% if user.is_staff %}
+
+        <a href="{% url 'orderhistory' %}" class="navBtn flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium hover:bg-primary/10 hover:text-primary transition">
+          <svg class="w-5 h-5 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4v6a8 8 0 008 8 8 8 0 008-8V7z"/>
+          </svg>
+          Order History
+        </a>
+        {% endif %}
+      </nav>
+    </div>
+
+    <!-- Quick Actions -->
+    <div>
+      <div class="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400 font-semibold mb-2">Quick Actions</div>
+      <div class="flex flex-col gap-2">
+      {% if user.is_staff %}
+
+        <a href="{% url 'addproduct' %}" class="w-full rounded-lg px-3 py-2 border border-gray-200 dark:border-gray-700 text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition">
+          ➕ Add Product
+        </a>
+        <a href="{% url 'addcategory' %}" class="w-full rounded-lg px-3 py-2 border border-gray-200 dark:border-gray-700 text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition">
+          📂 Add Category
+        </a>
+        {% endif %}
+        <a href="{% url 'store' %}" class="w-full rounded-lg px-3 py-2 border border-gray-200 dark:border-gray-700 text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition">
+          🏬 Go to Store
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>
+

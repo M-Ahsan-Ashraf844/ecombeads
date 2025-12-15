@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Signup Page</title>
+<link rel="stylesheet" href="{% static 'css/output.css' %}">
+<!-- Add this inside <head> of base.html -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+
+
+
+</head>
+<style>
+@keyframes slide-down {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-slide-down {
+  animation: slide-down 0.4s ease-out;
+}
+</style>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+  <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-sm">
+    <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Create Account</h2>
+    
+    <form action="{% url 'signup' %}" method="POST" class="space-y-4">
+       {% csrf_token %} 
+      <!-- Name -->
+      <div>
+        <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
+        <input type="text" id="name" name="{{form.username.name}}" required value="{{form.username.value}}"
+               class="mt-1 block w-full px-4 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 border-gray-300" />
+                 {% if form.username.errors %}
+<div class="text-red-400 p-3 rounded-md mt-2 transform transition-all duration-500 ease-in-out animate-slide-down">
+    {% for error in form.username.errors %}
+        <p>{{ error }}</p>
+    {% endfor %}
+</div>
+{% endif %}
+      </div>
+      <!-- <div>
+        <label for="email" class="block text-sm font-medium text-gray-700">email</label>
+        <input type="email" id="eamil" name="{{form.email.name}}" required value="{{form.email.value}}"
+               class="mt-1 block w-full px-4 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 border-gray-300" />
+        </div> -->
+      <!-- Password -->
+     <div class="relative">
+  <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+
+  <input type="password" id="password" name="{{form.password1.name}}" required value="{{form.password1.value}}"
+    class="mt-1 block w-full px-4 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 border-gray-300 pr-10" />
+
+  <!-- Eye Icon inside input -->
+
+  {% if form.password1.errors %}
+  <div class="text-red-400 p-3 rounded-md mt-2 transform transition-all duration-500 ease-in-out animate-slide-down">
+    {% for error in form.password1.errors %}
+      <p>{{ error }}</p>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+
+
+
+
+      <!-- Confirm Password -->
+      <div>
+        <label for="confirm-password" class="block text-sm font-medium text-gray-700">Confirm Password</label>
+        <input type="password" id="confirm-password" name="{{form.password2.name}}" required value="{{form.password2.value}}"
+               class="mt-1 block w-full px-4 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 border-gray-300" />
+                {% if form.password2.errors %}
+<div class="text-red-400 p-3 rounded-md mt-2 transform transition-all duration-500 ease-in-out animate-slide-down">
+    {% for error in form.password2.errors %}
+        <p class="text-red-600">{{ error }}</p>
+    {% endfor %}
+</div>
+{% endif %}
+               
+      </div>
+
+      <!-- Terms & Conditions -->
+      <div class="flex items-center">
+        <input type="checkbox" id="terms" name="terms" required
+               class="h-4 w-4 text-blue-600 border-gray-300 rounded" />
+        <label for="terms" class="ml-2 block text-sm text-gray-600">
+          I agree to the <a href="#" class="text-blue-600 hover:underline">Terms & Conditions</a>
+        </label>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit"
+              class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition">
+        Sign Up
+      </button>
+    </form>
+
+    <!-- Login Link -->
+    <p class="text-sm text-center text-gray-600 mt-6">
+      Already have an account? 
+      <a href="{% url 'login' %}" class="text-blue-600 hover:underline">Login</a>
+    </p>
+  </div>
+<script>
+  function togglePassword() {
+    const passwordField = document.getElementById("password");
+    const eyeIcon = document.getElementById("eyeIcon");
+
+    if (passwordField.type === "password") {
+      passwordField.type = "text";
+      eyeIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.542-7a9.973 9.973 0 012.142-3.43m2.708-2.708A9.956 9.956 0 0112 5c4.478 0 8.268 2.943 9.542 7a9.973 9.973 0 01-4.284 4.992M15 12a3 3 0 11-6 0 3 3 0 016 0z" />`; // crossed eye
+    } else {
+      passwordField.type = "password";
+      eyeIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 
+        9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 
+        0-8.268-2.943-9.542-7z" />`; // normal eye
+    }
+  }
+</script>
+</body>
+</html>

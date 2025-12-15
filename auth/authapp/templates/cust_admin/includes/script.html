@@ -1,0 +1,197 @@
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll("tr").forEach(row => {
+    let qty = row.querySelector(".quantity");
+    let price = row.querySelector(".price");
+    let totalCell = row.querySelector(".total");
+
+    if (qty && price && totalCell) {
+      let q = parseFloat(qty.innerText) || 0;
+      let p = parseFloat(price.innerText.replace("$", "")) || 0;
+      let total = q * p;
+      totalCell.innerText = "$" + total.toFixed(2);
+    }
+  });
+});
+// ---------- OPEN / CLOSE EDIT MODAL ----------
+function openOrderEditModal(orderId, currentStatus) {
+    document.getElementById("editOrderModal").classList.remove("hidden");
+    document.getElementById("edit_order_id").value = orderId;
+    document.getElementById("edit_order_status").value = currentStatus;
+}
+
+function closeEditModal() {
+    document.getElementById("editOrderModal").classList.add("hidden");
+}
+
+// ---------- SAVE ORDER STATUS ----------
+function saveOrderStatus() {
+    const orderId = document.getElementById("edit_order_id").value;
+    const newStatus = document.getElementById("edit_order_status").value;
+
+    fetch(`/update-order-status/${orderId}/`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "X-CSRFToken": getCookie("csrftoken"),
+        },
+        body: `status=${newStatus}`,
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            alert("✅ Order status updated to " + data.status);
+            location.reload(); // refresh to update status badge
+        } else {
+            alert("❌ Failed to update order status.");
+        }
+    })
+    .catch(err => console.error("Error:", err));
+}
+
+// ---------- OPEN / CLOSE VIEW MODAL ----------
+function openOrderModal(orderId) {
+    fetch(`/get-order-items/${orderId}/`)
+    .then(res => res.json())
+    .then(data => {
+        const container = document.getElementById("orderItemsContainer");
+        container.innerHTML = "";
+
+        if (data.items.length === 0) {
+            container.innerHTML = `<li class="text-gray-500">No items found.</li>`;
+        } else {
+            data.items.forEach(item => {
+                container.innerHTML += `
+                    <li class="flex justify-between border-b py-1">
+                        <span>${item.product_name} (x${item.quantity})</span>
+                        <span>$${parseFloat(item.price).toFixed(2)}</span>
+                    </li>
+                `;
+            });
+        }
+
+        document.getElementById("viewOrderModal").classList.remove("hidden");
+    })
+    .catch(err => console.error("Error:", err));
+}
+
+function closeViewOrderModal() {
+    document.getElementById("viewOrderModal").classList.add("hidden");
+}
+
+// ---------- PRINT ORDER ----------
+function printOrder(id) {
+    const content = document.getElementById(id).innerHTML;
+    const win = window.open("", "", "width=800,height=600");
+
+    win.document.write(`
+        <html>
+        <head>
+          <title>Order Invoice</title>
+          <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+        </head>
+        <body class="p-6">
+          ${content}
+        </body>
+        </html>
+    `);
+
+    win.document.close();
+    win.focus();
+    win.print();
+    win.close();
+}
+
+
+// ---------- CSRF HELPER ----------
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+        const cookies = document.cookie.split(";");
+        for (let cookie of cookies) {
+            cookie = cookie.trim();
+            if (cookie.startsWith(name + "=")) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+// ---------- ESC KEY CLOSE ----------
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+        closeEditModal();
+        closeViewOrderModal();
+    }
+});
+
+// ---------- AUTO CLOSE SUCCESS MESSAGE ----------
+setTimeout(() => {
+    const msg = document.getElementById("success-message");
+    if (msg) msg.remove();
+}, 4000);
+
+
+
+
+   function toggleOrderDetails(id) {
+    const row = document.getElementById(id);
+    row.classList.toggle("hidden");
+  }
+// Theme handling
+const root = document.documentElement;
+const themeToggle = document.getElementById('themeToggle');
+const iconLight = document.getElementById('iconLight');
+const iconDark = document.getElementById('iconDark');
+function setTheme(dark) {
+  if (dark) { root.classList.add('dark'); iconDark.classList.add('hidden'); iconLight.classList.remove('hidden'); localStorage.theme = 'dark'; }
+  else { root.classList.remove('dark'); iconDark.classList.remove('hidden'); iconLight.classList.add('hidden'); localStorage.theme = 'light'; }
+}
+const saved = localStorage.getItem('theme');
+if (saved) setTheme(saved === 'dark'); else setTheme(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+
+// toggle
+themeToggle.addEventListener('click', () => setTheme(!document.documentElement.classList.contains('dark')));
+
+// Sidebar toggle (mobile)
+const btnMenu = document.getElementById('btnMenu');
+const mobileSidebar = document.getElementById('mobileSidebar');
+const closeMobile = document.getElementById('closeMobile');
+btnMenu.addEventListener('click', () => { mobileSidebar.classList.toggle('-translate-x-full'); });
+closeMobile.addEventListener('click', () => { mobileSidebar.classList.add('-translate-x-full'); });
+
+// Profile menu
+const profileBtn = document.getElementById('profileBtn');
+const profileMenu = document.getElementById('profileMenu');
+profileBtn.addEventListener('click', (e)=>{ e.stopPropagation(); profileMenu.classList.toggle('hidden'); });
+document.addEventListener('click', ()=> profileMenu.classList.add('hidden'));
+
+// Navigation buttons
+document.querySelectorAll('.navBtn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const target = btn.getAttribute('data-target');
+    document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));
+    document.getElementById(target).classList.remove('hidden');
+    // active styles
+    document.querySelectorAll('.navBtn').forEach(n=>n.classList.remove('bg-primary/10','text-primary'));
+    btn.classList.add('bg-primary/10','text-primary');
+    // close mobile
+    if(window.innerWidth<1024) mobileSidebar.classList.add('-translate-x-full');
+  });
+});
+
+// Set Dashboard active by default
+document.querySelector('.navBtn[data-target=\"dashboard\"]').classList.add('bg-primary/10','text-primary');
+// Chart.js data
+const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const revenue = [12000,15800,14100,18900,20100,24400,23200,26750,25100,28900,30150,34200];
+const orders = [320,380,350,430,460,520,510,555,540,590,615,670];
+
+const ctx = document.getElementById('revenueChart').getContext('2d');
+new Chart(ctx, { type:'line', data:{ labels:months, datasets:[{ label:'Revenue', data:revenue, fill:true, tension:0.3, backgroundColor:'rgba(99,102,241,0.12)', borderColor:'rgba(99,102,241,1)', pointRadius:0 }] }, options:{ responsive:true, plugins:{ legend:{display:false} }, scales:{ y:{ beginAtZero:false } } } });
+
+const ctx2 = document.getElementById('ordersChart').getContext('2d');
+new Chart(ctx2, { type:'bar', data:{ labels:months, datasets:[{ label:'Orders', data:orders, backgroundColor:'rgba(124,58,237,0.9)' }] }, options:{ responsive:true, plugins:{ legend:{display:false} } } });
+</script>

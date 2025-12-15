@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>About Us - Neer Collection | Luxury Ladies Footwear & Accessories</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom pink theme configuration -->
+        <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+<link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+<link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/apple-touch-icon.png' %}">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'pink-primary': '#ec4899',
+                        'pink-light': '#fbcfe8',
+                        'pink-dark': '#be185d',
+                        'pink-50': '#fdf2f8',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap');
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .heading-font {
+            font-family: 'Playfair Display', serif;
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 50%, #fbcfe8 100%);
+        }
+        .section-divider {
+            border-top: 2px dotted #fbcfe8;
+        }
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(236, 72, 153, 0.15);
+            transition: all 0.4s ease;
+        }
+        .floating-heart {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+ 
+</head>
+<body class="bg-pink-50 text-gray-800">
+    <!-- Navigation -->
+    {% include 'Navbar.html' %}
+
+    <!-- Hero Section -->
+    <section class="hero-gradient py-16 md:py-24 overflow-hidden">
+        <div class="container mx-auto px-4 relative">
+            <!-- Floating decorative elements -->
+            <div class="absolute top-10 left-10 text-pink-light floating-heart">
+                <i class="fas fa-heart text-4xl opacity-30"></i>
+            </div>
+            <div class="absolute bottom-10 right-10 text-pink-light" style="animation-delay: 1.5s;">
+                <i class="fas fa-gem text-3xl opacity-30 floating-heart"></i>
+            </div>
+            
+            <div class="flex flex-col lg:flex-row items-center">
+                <div class="lg:w-1/2 mb-12 lg:mb-0 lg:pr-12">
+                    <h1 class="text-5xl md:text-6xl font-bold heading-font text-pink-dark mb-6 leading-tight">
+                        For The <span class="text-pink-primary">Elegant</span> Woman
+                    </h1>
+                    <p class="text-lg text-gray-700 mb-8 leading-relaxed">
+                        At Neer Collection, we celebrate feminine grace through meticulously crafted luxury footwear and accessories. Each piece is designed to make you feel beautiful, confident, and uniquely you.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <div class="bg-white rounded-xl p-5 shadow-lg flex items-center max-w-md">
+                            <i class="fas fa-flag text-pink-primary text-2xl mr-4"></i>
+                            <div>
+                                <h3 class="font-bold text-gray-800">Handcrafted in Lahore</h3>
+                                <p class="text-gray-600 text-sm">Where tradition meets luxury craftsmanship</p>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl p-5 shadow-lg flex items-center max-w-md">
+                            <i class="fas fa-heart text-pink-primary text-2xl mr-4"></i>
+                            <div>
+                                <h3 class="font-bold text-gray-800">Made for Women</h3>
+                                <p class="text-gray-600 text-sm">Exclusively designed for the modern woman</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:w-1/2">
+                    <div class="relative">
+                        <div class="bg-white p-3 rounded-2xl shadow-2xl">
+                            <img src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                                 alt="Luxury Ladies Footwear" 
+                                 class="rounded-xl w-full h-72 md:h-96 object-cover">
+                        </div>
+                        <div class="absolute -bottom-4 -right-4 bg-pink-primary text-white p-4 rounded-xl shadow-xl">
+                            <p class="text-sm font-bold">SINCE 2012</p>
+                            <p class="text-xs">12 Years of Excellence</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Content -->
+    <section class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold heading-font text-pink-dark mb-6">Our Feminine Legacy</h2>
+                <p class="text-gray-600 max-w-3xl mx-auto text-lg">
+                    Born in the heart of Lahore, Neer Collection was founded by women, for women. We believe every woman deserves to walk in beauty and confidence.
+                </p>
+            </div>
+
+            <!-- Factory Story -->
+            <div class="grid lg:grid-cols-2 gap-12 items-center mb-20">
+                <div class="order-2 lg:order-1">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                             alt="Our Lahore Workshop" 
+                             class="rounded-2xl shadow-xl w-full h-80 object-cover">
+                        <div class="absolute -bottom-6 -left-6 bg-white p-6 rounded-xl shadow-lg">
+                            <h4 class="font-bold text-pink-dark text-lg">All-Women Artisan Team</h4>
+                            <p class="text-gray-600 text-sm">85+ skilled female craftsmen</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-1 lg:order-2">
+                    <h3 class="text-3xl font-bold heading-font text-pink-dark mb-6">The Lahore Atelier</h3>
+                    <p class="text-gray-700 mb-6 leading-relaxed">
+                        Our Lahore factory is more than a workshop—it's a sanctuary of feminine creativity. Here, our all-women team of artisans blends traditional Pakistani craftsmanship with contemporary design, creating footwear that tells stories of heritage and modern elegance.
+                    </p>
+                    <div class="grid grid-cols-2 gap-6 mt-8">
+                        <div class="bg-pink-light p-4 rounded-xl">
+                            <i class="fas fa-venus text-pink-primary text-2xl mb-2"></i>
+                            <h4 class="font-bold text-pink-dark">Women-Led</h4>
+                            <p class="text-sm text-gray-700">Founded & operated by women</p>
+                        </div>
+                        <div class="bg-pink-light p-4 rounded-xl">
+                            <i class="fas fa-hands-helping text-pink-primary text-2xl mb-2"></i>
+                            <h4 class="font-bold text-pink-dark">Fair Wages</h4>
+                            <p class="text-sm text-gray-700">Empowering female artisans</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-divider my-16"></div>
+
+            <!-- Collections -->
+            <div class="mb-20">
+                <h3 class="text-3xl font-bold heading-font text-center text-pink-dark mb-4">Our Luxurious Collections</h3>
+                <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+                    From elegant heels to delicate accessories, every piece is crafted to celebrate your unique femininity
+                </p>
+                
+                <div class="grid md:grid-cols-3 gap-8 mb-16">
+                    <!-- Ladies Heels -->
+                    <div class="product-card bg-white rounded-2xl shadow-lg p-8 border border-pink-light">
+                        <div class="w-20 h-20 bg-gradient-to-r from-pink-light to-pink-primary rounded-full flex items-center justify-center mb-6 mx-auto">
+                            <i class="fas fa-high-heel text-white text-3xl"></i>
+                        </div>
+                        <h4 class="text-2xl font-bold text-center heading-font text-pink-dark mb-4">Luxury Heels</h4>
+                        <p class="text-gray-700 mb-6 text-center">
+                            Elegant heels for every occasion, from office to evening glamour
+                        </p>
+                        <ul class="text-gray-700 space-y-3">
+                            <li class="flex items-center">
+                                <i class="fas fa-star text-pink-primary mr-3"></i>
+                                <span>Stiletto & Block Heels</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-star text-pink-primary mr-3"></i>
+                                <span>Wedding & Party Collection</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-star text-pink-primary mr-3"></i>
+                                <span>Comfort-First Design</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-star text-pink-primary mr-3"></i>
+                                <span>Customizable Heights</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Designer Chappals -->
+                    <div class="product-card bg-white rounded-2xl shadow-lg p-8 border border-pink-light">
+                        <div class="w-20 h-20 bg-gradient-to-r from-pink-light to-pink-primary rounded-full flex items-center justify-center mb-6 mx-auto">
+                            <i class="fas fa-shoe-prints text-white text-3xl"></i>
+                        </div>
+                        <h4 class="text-2xl font-bold text-center heading-font text-pink-dark mb-4">Designer Chappals</h4>
+                        <p class="text-gray-700 mb-6 text-center">
+                            Traditional elegance meets contemporary style
+                        </p>
+                        <ul class="text-gray-700 space-y-3">
+                            <li class="flex items-center">
+                                <i class="fas fa-sparkles text-pink-primary mr-3"></i>
+                                <span>Bridal & Festive Collection</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-sparkles text-pink-primary mr-3"></i>
+                                <span>Hand-Embroidered Details</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-sparkles text-pink-primary mr-3"></i>
+                                <span>Premium Leather & Fabrics</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-sparkles text-pink-primary mr-3"></i>
+                                <span>Matching Accessories</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Handmade Bracelets -->
+                    <div class="product-card bg-white rounded-2xl shadow-lg p-8 border border-pink-light">
+                        <div class="w-20 h-20 bg-gradient-to-r from-pink-light to-pink-primary rounded-full flex items-center justify-center mb-6 mx-auto">
+                            <i class="fas fa-gem text-white text-3xl"></i>
+                        </div>
+                        <h4 class="text-2xl font-bold text-center heading-font text-pink-dark mb-4">Handmade Bracelets</h4>
+                        <p class="text-gray-700 mb-6 text-center">
+                            Delicate shoe bracelets & charms that add magic to your step
+                        </p>
+                        <ul class="text-gray-700 space-y-3">
+                            <li class="flex items-center">
+                                <i class="fas fa-heart text-pink-primary mr-3"></i>
+                                <span>Shoe Charms & Anklets</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-heart text-pink-primary mr-3"></i>
+                                <span>Adjustable & Customizable</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-heart text-pink-primary mr-3"></i>
+                                <span>Birthstone & Zodiac Designs</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-heart text-pink-primary mr-3"></i>
+                                <span>Perfect Gift Sets</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Artisan Beads -->
+            <div class="bg-white rounded-3xl p-8 md:p-12 shadow-xl mb-20 border border-pink-light">
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h3 class="text-3xl font-bold heading-font text-pink-dark mb-6">Artisan Bead Collection</h3>
+                        <p class="text-gray-700 mb-6 leading-relaxed">
+                            Our exclusive bead collection allows you to create personalized accessories. Each bead is handcrafted with attention to detail, offering endless possibilities for customization.
+                        </p>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <i class="fas fa-check-circle text-pink-primary text-xl mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-bold text-pink-dark">Custom Design Studio</h4>
+                                    <p class="text-gray-600 text-sm">Create your own unique bracelet combinations</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-check-circle text-pink-primary text-xl mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-bold text-pink-dark">Monthly Bead Club</h4>
+                                    <p class="text-gray-600 text-sm">Subscribe to receive exclusive beads each month</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                             alt="Handmade Beads Collection" 
+                             class="rounded-2xl shadow-lg w-full h-72 object-cover">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Craftsmanship Process -->
+            <div class="text-center mb-20">
+                <h3 class="text-3xl font-bold heading-font text-pink-dark mb-12">The Art of Creation</h3>
+                <div class="grid md:grid-cols-4 gap-6">
+                    <div class="p-6">
+                        <div class="w-16 h-16 bg-pink-light rounded-full flex items-center justify-center mb-4 mx-auto">
+                            <span class="text-2xl font-bold text-pink-primary">1</span>
+                        </div>
+                        <h4 class="font-bold text-pink-dark mb-2">Design</h4>
+                        <p class="text-sm text-gray-600">Sketching feminine silhouettes</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="w-16 h-16 bg-pink-light rounded-full flex items-center justify-center mb-4 mx-auto">
+                            <span class="text-2xl font-bold text-pink-primary">2</span>
+                        </div>
+                        <h4 class="font-bold text-pink-dark mb-2">Material Selection</h4>
+                        <p class="text-sm text-gray-600">Premium leathers & fabrics</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="w-16 h-16 bg-pink-light rounded-full flex items-center justify-center mb-4 mx-auto">
+                            <span class="text-2xl font-bold text-pink-primary">3</span>
+                        </div>
+                        <h4 class="font-bold text-pink-dark mb-2">Handcrafting</h4>
+                        <p class="text-sm text-gray-600">Artisan stitching & detailing</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="w-16 h-16 bg-pink-light rounded-full flex items-center justify-center mb-4 mx-auto">
+                            <span class="text-2xl font-bold text-pink-primary">4</span>
+                        </div>
+                        <h4 class="font-bold text-pink-dark mb-2">Quality Check</h4>
+                        <p class="text-sm text-gray-600">Final inspection & perfection</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values -->
+    <section class="py-20 bg-gradient-to-b from-white to-pink-50">
+        <div class="container mx-auto px-4">
+            <h3 class="text-3xl font-bold heading-font text-center text-pink-dark mb-16">Our Feminine Philosophy</h3>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-2xl shadow-lg text-center">
+                    <div class="w-20 h-20 bg-pink-light rounded-full flex items-center justify-center mb-6 mx-auto">
+                        <i class="fas fa-venus-double text-pink-primary text-3xl"></i>
+                    </div>
+                    <h4 class="text-xl font-bold heading-font text-pink-dark mb-4">By Women, For Women</h4>
+                    <p class="text-gray-700">Every design is created with understanding of women's needs, comfort, and style preferences.</p>
+                </div>
+                
+                <div class="bg-white p-8 rounded-2xl shadow-lg text-center">
+                    <div class="w-20 h-20 bg-pink-light rounded-full flex items-center justify-center mb-6 mx-auto">
+                        <i class="fas fa-hand-holding-heart text-pink-primary text-3xl"></i>
+                    </div>
+                    <h4 class="text-xl font-bold heading-font text-pink-dark mb-4">Empowerment Through Craft</h4>
+                    <p class="text-gray-700">We provide fair wages and skill development for women artisans in Lahore.</p>
+                </div>
+                
+                <div class="bg-white p-8 rounded-2xl shadow-lg text-center">
+                    <div class="w-20 h-20 bg-pink-light rounded-full flex items-center justify-center mb-6 mx-auto">
+                        <i class="fas fa-crown text-pink-primary text-3xl"></i>
+                    </div>
+                    <h4 class="text-xl font-bold heading-font text-pink-dark mb-4">Luxury with Conscience</h4>
+                    <p class="text-gray-700">Ethical production, sustainable materials, and timeless designs that respect both women and nature.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <a href="https://wa.me/923017890518?text=Hello%2C%20I%20saw%20your%20site%20and%20need%20help" 
+   target="_blank" rel="noopener noreferrer"
+   class="fixed right-5 bottom-12 z-50 inline-flex items-center justify-center w-14 h-14 rounded-full shadow-lg"
+   style="background:#25D366;" aria-label="Chat on WhatsApp">
+  <!-- main icon (white) -->
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M21 12.05a9 9 0 1 0-2.54 6.02L21 21l-1.93-5.54A8.98 8.98 0 0 0 21 12.05z"/>
+    <path d="M16.2 14.1c-.3 0-.6-.1-1-.2-.4-.1-1-.3-1.6-.6-.8-.4-1.4-1-1.8-1.6-.4-.7-.6-1.3-.6-1.7 0-.2 0-.5.2-.7.1-.2.3-.4.5-.4.1 0 .3 0 .5.1.2 0 .3.1.5.2s.3.1.4.1c.2 0 .4 0 .6-.1.2-.1.4-.2.6-.3.2-.1.5-.2.9-.2.9 0 1.8.4 2.5 1.1.7.7 1 1.6 1 2.6 0 .6-.2 1-.6 1.5-.4.5-1.1.8-1.8.8z" fill="white"/>
+  </svg>
+
+  <!-- optional badge -->
+  <span style="position:absolute; top:-6px; right:-6px; background:#ff3b30; width:18px; height:18px; display:inline-flex; align-items:center; justify-content:center; border-radius:999px; color:white; font-size:11px;">
+    3
+  </span>
+</a>
+
+    <!-- Footer -->
+    {% include 'footer.html' %}
+</body>
+</html>

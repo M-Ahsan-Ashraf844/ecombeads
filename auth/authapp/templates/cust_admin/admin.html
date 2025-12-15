@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Nova Admin — Professional Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = {theme: {extend: {colors: {primary:'#6366F1',accent:'#7C3AED'}}}, darkMode:'class'}</script>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>html,body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial} .glass{backdrop-filter: blur(6px);} .sidebar-scroll::-webkit-scrollbar{width:8px} .sidebar-scroll::-webkit-scrollbar-thumb{background:rgba(99,102,241,0.15);border-radius:8px}</style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100 antialiased">
+
+  <!-- Topbar -->
+  <header class="fixed top-0 left-0 right-0 z-40 bg-white/80 dark:bg-gray-800/70 backdrop-blur border-b border-gray-200 dark:border-gray-700">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="flex h-14 items-center justify-between gap-4">
+
+      <!-- Left side (Logo + Menu button) -->
+      <div class="flex items-center gap-3">
+        <!-- Mobile Menu Button -->
+        <button id="btnMenu" aria-label="Toggle menu" 
+          class="lg:hidden p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+              d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+
+        <!-- Logo -->
+        <div class="flex items-center gap-2">
+          <div class="h-8 w-8 rounded-xl bg-gradient-to-tr from-primary to-accent shadow-md"></div>
+          <div class="leading-4 hidden sm:block">
+            <div class="text-sm font-bold text-primary dark:text-primary">Nova Admin</div>
+            <div class="text-xs text-gray-500 dark:text-gray-400">Dashboard</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Search Bar (hidden on mobile) -->
+      <div class="hidden md:flex flex-1 max-w-2xl">
+        <label class="relative w-full">
+          <span class="sr-only">Search</span>
+          <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z"/>
+            </svg>
+          </span>
+          <input id="searchInput" 
+            class="w-full rounded-xl border border-gray-200 bg-white/60 px-10 py-2 text-sm 
+            placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/40 
+            dark:bg-gray-800 dark:border-gray-700" 
+            placeholder="Search orders, customers, products..." />
+        </label>
+      </div>
+
+      <!-- Right side buttons -->
+      <div class="flex items-center gap-2">
+        <!-- Dark/Light Toggle -->
+        <button id="themeToggle" title="Toggle dark / light" 
+          class="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+          <svg id="iconLight" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+              d="M12 3v1m0 16v1m8.66-9h-1M4.34 12h-1M18.36 5.64l-.7.7M6.34 17.66l-.7.7
+              M18.36 18.36l-.7-.7M6.34 6.34l-.7-.7M12 7a5 5 0 100 10 5 5 0 000-10z"/>
+          </svg>
+          <svg id="iconDark" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+              d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+          </svg>
+        </button>
+
+        <!-- Notifications -->
+        <div class="relative">
+          <button id="notifBtn" 
+            class="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 
+                10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5"/>
+            </svg>
+          </button>
+          <span class="absolute -top-1 -right-1 inline-flex items-center justify-center px-2 py-0.5 
+            text-[10px] font-semibold rounded-full bg-primary text-white">3</span>
+        </div>
+
+        <!-- Profile Dropdown -->
+        <div class="relative">
+          <button id="profileBtn" 
+            class="flex items-center gap-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 
+            px-2 py-1 transition">
+            <img src="https://api.dicebear.com/6.x/initials/svg?seed=Admin" 
+              alt="avatar" 
+              class="w-8 h-8 rounded-full border border-gray-200 dark:border-gray-700" />
+            <span class="hidden sm:block text-sm">Admin</span>
+            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                d="M19 9l-7 7-7-7"/>
+            </svg>
+          </button>
+          <!-- Dropdown Menu -->
+          <div id="profileMenu" 
+            class="hidden absolute right-0 mt-2 w-44 rounded-lg bg-white shadow-lg border border-gray-200 
+            dark:bg-gray-800 dark:border-gray-700 py-1 overflow-hidden">
+            <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-700">Profile</a>
+            <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-700">Settings</a>
+            <div class="border-t border-gray-100 dark:border-gray-700"></div>
+            <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-700">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+  <div class="pt-16">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="flex min-h-[70vh] gap-6">
+
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sidebar-scroll hidden lg:block shrink-0 w-64 rounded-xl border border-gray-100 bg-white/70 dark:bg-gray-800/60 dark:border-gray-700 p-3 glass">
+          <div class="mb-4 px-2">
+            <div class="text-xs uppercase text-gray-500 dark:text-gray-400 font-semibold mb-2">Navigation</div>
+            <nav class="space-y-1">
+              <button class="navBtn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium hover:bg-primary/10 hover:text-primary transition" data-target="dashboard">
+                <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h18v18H3z"/></svg>
+                Dashboard
+              </button>
+
+              <button class="navBtn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium hover:bg-primary/10 hover:text-primary transition" data-target="orders">
+                <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h18v6H3zM3 13h18v8H3z"/></svg>
+                Orders
+              </button>
+
+              <button class="navBtn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium hover:bg-primary/10 hover:text-primary transition" data-target="customers">
+                <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M17 20h5v-2a4 4 0 00-4-4h-1\"/></svg>
+                Customers
+              </button>
+
+              <button class="navBtn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium hover:bg-primary/10 hover:text-primary transition" data-target="products">
+                <svg class="w-5 h-5 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M20 7l-8-4-8 4v6a8 8 0 008 8 8 8 0 008-8V7z\"/></svg>
+                Products
+              </button>
+            </nav>
+          </div>
+
+          <div class="mt-6 px-2">
+            <div class="text-xs uppercase text-gray-500 dark:text-gray-400 font-semibold mb-2">Quick actions</div>
+            <div class="flex flex-col gap-2">
+               <button id="btnCreateOrder" class="w-full rounded-lg px-3 py-2 bg-primary text-white text-sm hover:opacity-95 transition">Create Order  </button>
+  <button id="btnAddProduct" class="w-full rounded-lg px-3 py-2 border border-gray-200 dark:border-gray-700 text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition">
+    Add Product</button>
+    <button id="btnAddProduct" class="w-full rounded-lg px-3 py-2 border border-gray-200 dark:border-gray-700 text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition">
+    Add Category</button>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Mobile sidebar (drawer) -->
+        <div id="mobileSidebar" class="fixed inset-y-0 left-0 z-40 w-64 transform -translate-x-full transition lg:hidden">
+          <div class="h-full bg-white p-4 border-r dark:bg-gray-800 dark:border-gray-700">
+            <div class="flex items-center justify-between mb-4">
+              <div class="flex items-center gap-2">
+                <div class="h-8 w-8 rounded-xl bg-gradient-to-tr from-primary to-accent"></div>
+                <div class="text-sm font-bold">Nova Admin</div>
+              </div>
+              <button id="closeMobile" class="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M6 18L18 6M6 6l12 12\"/></svg></button>
+            </div>
+
+            <nav class="space-y-1">
+              <button class="navBtn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium hover:bg-primary/10 hover:text-primary transition" data-target="dashboard">Dashboard</button>
+              <button class="navBtn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium hover:bg-primary/10 hover:text-primary transition" data-target="orders">Orders</button>
+              <button class="navBtn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium hover:bg-primary/10 hover:text-primary transition" data-target="customers">Customers</button>
+              <button class="navBtn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium hover:bg-primary/10 hover:text-primary transition" data-target="products">Products</button>
+            </nav>
+          </div>
+        </div>
+        <!-- Main Panel -->
+        <section class="flex-1">
+          
+          <div id="content" class="space-y-6">
+
+            <!-- Dashboard Page -->
+            <div id="dashboard" class="page">
+              <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <div class="bg-gradient-to-tr from-primary/90 to-accent/90 text-white rounded-2xl p-5 shadow-lg transform hover:-translate-y-1 transition">
+                  <div class="text-sm">Revenue</div>
+                  <div class="mt-2 text-2xl font-bold">$34,200</div>
+                  <div class="mt-1 text-sm opacity-80">+12% vs last month</div>
+                </div>
+
+                <div class="bg-white rounded-2xl p-4 shadow hover:shadow-lg transition">
+                  <div class="text-sm text-gray-500">Orders</div>
+                  <div class="mt-2 text-2xl font-bold">670</div>
+                  <div class="mt-1 text-sm text-gray-500">8% fulfilled</div>
+                </div>
+
+                <div class="bg-white rounded-2xl p-4 shadow hover:shadow-lg transition">
+                  <div class="text-sm text-gray-500">Customers</div>
+                  <div class="mt-2 text-2xl font-bold">1,284</div>
+                  <div class="mt-1 text-sm text-gray-500">Active</div>
+                </div>
+
+                <div class="bg-white rounded-2xl p-4 shadow hover:shadow-lg transition">
+                  <div class="text-sm text-gray-500">Refund Rate</div>
+                  <div class="mt-2 text-2xl font-bold text-red-600">1.8%</div>
+                  <div class="mt-1 text-sm text-gray-500">This month</div>
+                </div>
+              </div>
+
+              <div class="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="bg-white rounded-2xl p-4 shadow">
+                  <div class="flex items-center justify-between">
+                    <h3 class="font-semibold">Revenue (Last 12 months)</h3>
+                    <div class="text-sm text-gray-500">2025</div>
+                  </div>
+                  <canvas id="revenueChart" class="mt-4"></canvas>
+                </div>
+
+                <div class="bg-white rounded-2xl p-4 shadow">
+                  <div class="flex items-center justify-between">
+                    <h3 class="font-semibold">Orders by Month</h3>
+                    <div class="text-sm text-gray-500">YTD</div>
+                  </div>
+                  <canvas id="ordersChart" class="mt-4"></canvas>
+                </div>
+              </div>
+
+              <div class="mt-6 bg-white rounded-2xl p-4 shadow">
+                <div class="flex items-center justify-between mb-3">
+                  <h3 class="font-semibold">Recent Orders</h3>
+                  <div class="flex items-center gap-2">
+                    <button class="px-3 py-1 text-sm rounded-lg border hover:bg-gray-50">Export</button>
+                    <button class="px-3 py-1 text-sm rounded-lg bg-primary text-white">New Order</button>
+                  </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                  <table class="w-full text-sm">
+                    <thead class="text-left text-gray-500 border-b">
+                      <tr>
+                        <th class="py-2">Order</th>
+                        <th class="py-2">Customer</th>
+                        <th class="py-2">Status</th>
+                        <th class="py-2">Method</th>
+                        <th class="py-2">Total</th>
+                        <th class="py-2">Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% if order %}
+                      {% for order in order %}
+
+                      <tr class="border-b hover:bg-gray-50 dark:hover:bg-gray-800">
+                        <td class="py-3 font-medium">#{{forloop.counter}}</td>
+                        <td class="py-3">{{order.customer}}<br/><span class="text-xs text-gray-400">#@example.com</span></td>
+                        <td class="py-3"><span class="px-2 py-1 rounded-full bg-emerald-100 text-emerald-700 text-xs">{{order.status}}</span></td>
+                        <td class="py-3">Cod</td>
+                        <td class="py-3 font-medium">{{order.grand_total}}</td>
+                        <td class="py-3">{{order.created_date}}</td>
+                      </tr> 
+                      {% endfor %}  
+                      {% endif %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- Orders Page -->
+  <div id="orders" class="page hidden">
+  <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-6 shadow-lg">
+    <h3 class="text-lg sm:text-xl font-semibold mb-4 sm:mb-6 text-gray-800 dark:text-gray-100 flex items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 sm:w-6 sm:h-6 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M9 21V3m6 18V3" />
+      </svg>
+      All Orders
+    </h3>
+
+    <!-- Responsive Table Wrapper -->
+    <div class="overflow-x-auto -mx-2 sm:mx-0">
+      <table class="w-full text-xs sm:text-sm min-w-[600px]">
+        <thead class="text-left text-gray-500 dark:text-gray-400 border-b">
+          <tr>
+            <th class="py-2 px-2 sm:px-3">Order</th>
+            <th class="py-2 px-2 sm:px-3">Customer</th>
+            <th class="py-2 px-2 sm:px-3">Status</th>
+            <th class="py-2 px-2 sm:px-3">Total</th>
+            <th class="py-2 px-2 sm:px-3">Date</th>
+            <th class="py-2 px-2 sm:px-3 text-center">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if order %}
+          {% for order in order %}
+          <tr class="border-b hover:bg-gray-50 dark:hover:bg-gray-700 transition">
+            <td class="py-3 px-2 sm:px-3 font-medium">#{{ forloop.counter }}</td>
+            <td class="py-3 px-2 sm:px-3">
+              {{ order.customer }}<br/>
+              <span class="text-[10px] sm:text-xs text-gray-400">{{ order.customer_email }}</span>
+            </td>
+            <td class="py-3 px-2 sm:px-3">
+              <span class="px-2 py-1 rounded-full 
+                {% if order.status == 'Pending' %} bg-yellow-100 text-yellow-700 
+                {% elif order.status == 'Completed' %} bg-emerald-100 text-emerald-700 
+                {% elif order.status == 'Cancelled' %} bg-red-100 text-red-700 
+                {% else %} bg-gray-100 text-gray-700 {% endif %} text-[10px] sm:text-xs">
+                {{ order.status }}
+              </span>
+            </td>
+            <td class="py-3 px-2 sm:px-3 font-medium">${{ order.grand_total }}</td>
+            <td class="py-3 px-2 sm:px-3">{{ order.created_date }}</td>
+            <td class="py-3 px-2 sm:px-3 text-center space-y-1 sm:space-y-0 sm:space-x-2">
+              <button onclick="toggleOrderDetails('order-{{ order.id }}')" 
+                class="w-full sm:w-auto px-2 sm:px-3 py-1 text-[10px] sm:text-xs rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition">
+                View
+              </button>
+              <button onclick="printOrder('order-{{ order.id }}')" 
+                class="w-full sm:w-auto px-2 sm:px-3 py-1 text-[10px] sm:text-xs rounded-lg bg-gray-600 text-white hover:bg-gray-700 transition">
+                Print
+              </button>
+            </td>
+          </tr>
+
+          <!-- Expandable Order Items Row -->
+          <tr id="order-{{ order.id }}" class="hidden bg-gray-50 dark:bg-gray-900">
+            <td colspan="6" class="p-4">
+              <h4 class="font-semibold text-gray-700 dark:text-gray-200 mb-2">Order Items</h4>
+              <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                {% for item in order.orderitem_set.all %}
+                <div class="p-3 border rounded-lg bg-white dark:bg-gray-800 shadow-sm">
+                  <div class="font-medium text-gray-800 dark:text-gray-100">{{ item.product.name }}</div>
+                  <div class="text-[11px] sm:text-xs text-gray-500 dark:text-gray-400">Qty: {{ item.quantity }}</div>
+                  <div class="text-[11px] sm:text-xs text-gray-500 dark:text-gray-400">Price: ${{ item.price }}</div>
+                </div>
+                {% empty %}
+                <p class="text-sm text-gray-500 dark:text-gray-400">No items in this order.</p>
+                {% endfor %}
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+            <!-- Customers Page -->
+            <div id="customers" class="page hidden">
+  <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg">
+    <h3 class="text-xl font-semibold mb-6 text-gray-800 dark:text-gray-100 flex items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5V4H2v16h5m10-6a2 2 0 11-4 0 2 2 0 014 0z" />
+      </svg>
+      Customers
+    </h3>
+
+    {% if customer %}
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {% for cust in customer %}
+      <div class="p-5 bg-gray-50 dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 hover:shadow-xl transition duration-300">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-12 h-12 flex items-center justify-center rounded-full bg-indigo-100 dark:bg-indigo-900 text-indigo-600 dark:text-indigo-300 font-bold">
+            {{ cust.customer_name|slice:":1" }}
+          </div>
+          <div>
+            <h4 class="font-semibold text-gray-800 dark:text-gray-100">{{ cust.customer_name }}</h4>
+            <span class="text-xs text-gray-500 dark:text-gray-400">Customer</span>
+          </div>
+        </div>
+
+        <div class="space-y-1 text-sm text-gray-600 dark:text-gray-300">
+          <p><span class="font-medium">📍 Address:</span> {{ cust.customer_address }}</p>
+          <p><span class="font-medium">📞 Phone:</span> {{ cust.customer_number }}</p>
+          <p><span class="font-medium">✉️ Email:</span> <a href="mailto:{{ cust.customer_email }}" class="text-indigo-600 dark:text-indigo-400 hover:underline">{{ cust.customer_email }}</a></p>
+        </div>
+
+        <div class="mt-4 flex gap-2">
+          <a href="#" class="px-3 py-1 text-xs rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition">Edit</a>
+          <a href="#" class="px-3 py-1 text-xs rounded-lg bg-red-500 text-white hover:bg-red-600 transition">Delete</a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-gray-500 dark:text-gray-400 text-sm">No customers found.</p>
+    {% endif %}
+  </div>
+</div>
+
+
+            <!-- Products Page -->
+           <div id="products" class="page hidden">
+  <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg">
+    <h3 class="text-xl font-semibold mb-6 text-gray-800 dark:text-gray-100 flex items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V7a2 2 0 00-2-2h-4l-2-2H6a2 2 0 00-2 2v6m16 0a2 2 0 01-2 2H6a2 2 0 01-2-2m16 0v6a2 2 0 01-2 2H6a2 2 0 01-2-2v-6" />
+      </svg>
+      Products
+    </h3>
+
+    {% if product %}
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      {% for prod in product %}
+      <div class="bg-gray-50 dark:bg-gray-900 rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 hover:shadow-xl transition duration-300">
+        
+        <!-- Product Image -->
+        <div class="relative">
+          <img class="w-full h-40 object-cover" src="{{ prod.image.url }}" alt="{{ prod.name }}">
+          <span class="absolute top-2 right-2 bg-green-600 text-white text-xs px-2 py-1 rounded-full shadow">
+            ${{ prod.price }}
+          </span>
+        </div>
+        
+        <!-- Product Info -->
+        <div class="p-4">
+          <h4 class="font-semibold text-gray-800 dark:text-gray-100 truncate">{{ prod.name }}</h4>
+          <p class="text-xs text-gray-500 dark:text-gray-400">ID: {{ prod.id }}</p>
+          
+          <!-- Actions -->
+          <div class="mt-4 flex gap-2">
+            <a href="#" class="px-3 py-1 text-xs rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition">Edit</a>
+            <a href="#" class="px-3 py-1 text-xs rounded-lg bg-red-500 text-white hover:bg-red-600 transition">Delete</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-gray-500 dark:text-gray-400 text-sm">No products found.</p>
+    {% endif %}
+  </div>
+</div>
+
+
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <footer class="mt-8 py-6 text-center text-sm text-gray-500">
+    © 2025 Nova Admin. All rights reserved.
+  </footer>
+
+<script>
+   function printOrder(id) {
+    const orderContent = document.getElementById(id).innerHTML;
+    const printWindow = window.open('', '', 'width=800,height=600');
+    printWindow.document.write(`
+      <html>
+      <head>
+        <title>Order Invoice</title>
+        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+      </head>
+      <body>${orderContent}</body>
+    </html>
+
+    `);
+    printWindow.document.close();
+    printWindow.print();
+  }
+
+
+
+
+
+   function toggleOrderDetails(id) {
+    const row = document.getElementById(id);
+    row.classList.toggle("hidden");
+  }
+// Theme handling
+const root = document.documentElement;
+const themeToggle = document.getElementById('themeToggle');
+const iconLight = document.getElementById('iconLight');
+const iconDark = document.getElementById('iconDark');
+function setTheme(dark) {
+  if (dark) { root.classList.add('dark'); iconDark.classList.add('hidden'); iconLight.classList.remove('hidden'); localStorage.theme = 'dark'; }
+  else { root.classList.remove('dark'); iconDark.classList.remove('hidden'); iconLight.classList.add('hidden'); localStorage.theme = 'light'; }
+}
+const saved = localStorage.getItem('theme');
+if (saved) setTheme(saved === 'dark'); else setTheme(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+
+// toggle
+themeToggle.addEventListener('click', () => setTheme(!document.documentElement.classList.contains('dark')));
+
+// Sidebar toggle (mobile)
+const btnMenu = document.getElementById('btnMenu');
+const mobileSidebar = document.getElementById('mobileSidebar');
+const closeMobile = document.getElementById('closeMobile');
+btnMenu.addEventListener('click', () => { mobileSidebar.classList.toggle('-translate-x-full'); });
+closeMobile.addEventListener('click', () => { mobileSidebar.classList.add('-translate-x-full'); });
+
+// Profile menu
+const profileBtn = document.getElementById('profileBtn');
+const profileMenu = document.getElementById('profileMenu');
+profileBtn.addEventListener('click', (e)=>{ e.stopPropagation(); profileMenu.classList.toggle('hidden'); });
+document.addEventListener('click', ()=> profileMenu.classList.add('hidden'));
+
+// Navigation buttons
+document.querySelectorAll('.navBtn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const target = btn.getAttribute('data-target');
+    document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));
+    document.getElementById(target).classList.remove('hidden');
+    // active styles
+    document.querySelectorAll('.navBtn').forEach(n=>n.classList.remove('bg-primary/10','text-primary'));
+    btn.classList.add('bg-primary/10','text-primary');
+    // close mobile
+    if(window.innerWidth<1024) mobileSidebar.classList.add('-translate-x-full');
+  });
+});
+
+// Set Dashboard active by default
+document.querySelector('.navBtn[data-target=\"dashboard\"]').classList.add('bg-primary/10','text-primary');
+// Chart.js data
+const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const revenue = [12000,15800,14100,18900,20100,24400,23200,26750,25100,28900,30150,34200];
+const orders = [320,380,350,430,460,520,510,555,540,590,615,670];
+
+const ctx = document.getElementById('revenueChart').getContext('2d');
+new Chart(ctx, { type:'line', data:{ labels:months, datasets:[{ label:'Revenue', data:revenue, fill:true, tension:0.3, backgroundColor:'rgba(99,102,241,0.12)', borderColor:'rgba(99,102,241,1)', pointRadius:0 }] }, options:{ responsive:true, plugins:{ legend:{display:false} }, scales:{ y:{ beginAtZero:false } } } });
+
+const ctx2 = document.getElementById('ordersChart').getContext('2d');
+new Chart(ctx2, { type:'bar', data:{ labels:months, datasets:[{ label:'Orders', data:orders, backgroundColor:'rgba(124,58,237,0.9)' }] }, options:{ responsive:true, plugins:{ legend:{display:false} } } });
+</script>
+</body>
+</html>
