@@ -8,7 +8,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-fallback-key-for-dev')
 
-DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+DEBUG = 'false'
 
 ALLOWED_HOSTS = ["*", ".onrender.com"]
 CSRF_TRUSTED_ORIGINS = ["https://*.onrender.com"]
@@ -61,7 +61,6 @@ DATABASES = {
     'default': dj_database_url.config(
         default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
         conn_max_age=600,
-        ssl_require=True
     )
 }
 
