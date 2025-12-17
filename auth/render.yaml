@@ -1,16 +1,27 @@
-# render.yaml - configure Render deployment and database
+# render.yaml
 services:
   - type: web
-    name: authapp # replace with your app name
+    name: beads-byshafaq
     env: python
-    buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn auth.auth.wsgi:application
+    plan: free
+    buildCommand: |
+      pip install -r requirements.txt
+      cd auth && python manage.py collectstatic --noinput
+    startCommand: cd auth && gunicorn auth.wsgi:application --bind 0.0.0.0:$PORT
     envVars:
       - key: DATABASE_URL
         fromDatabase:
-          name: myshop-beads # database name in Render
+          name: myshop-beads
           property: connectionString
+      - key: DJANGO_SETTINGS_MODULE
+        value: auth.settings
+      - key: PYTHONPATH
+        value: /opt/render/project/src:/opt/render/project/src/auth
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
 
 databases:
-  - name: myshop-beads # database name in Render
-    plan: free # free plan for PostgreSQL
+  - name: myshop-beads
+    plan: free
