@@ -110,6 +110,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "shafaqashraf606@gmail.com"
 EMAIL_HOST_PASSWORD = "ybvq wrfd jyhx jrpa"
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+ADMIN_EMAIL = "shafaqashraf606@gmail.com"
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
