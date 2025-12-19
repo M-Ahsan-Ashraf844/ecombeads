@@ -49,7 +49,7 @@ class Customerdetail(models.Model):
         ('islamabad','Islamabad'),
     ])
     customer_address=models.CharField(max_length=300,default='unknown')
-    customer_number=models.PositiveIntegerField()
+    customer_number=models.CharField(max_length=15,default='unknown')
     def __str__(self):
         return self.customer_name
 
