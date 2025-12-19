@@ -293,15 +293,8 @@ def home(request):
     
     categories = category.objects.all()
     category_id = request.GET.get("category_id")
-    user_type = None
     
-    if request.user.is_authenticated:
-        with connection.cursor() as cursor:
-            cursor.execute("SELECT user_type FROM auth_user WHERE id=%s", [request.user.id])
-            row = cursor.fetchone()
-            if row:
-                user_type = row[0]
-    
+
     if category_id:
         filter_product = product.objects.filter(category_id=category_id)
         return render(request, "home.html", {
@@ -316,7 +309,7 @@ def home(request):
     return render(request, 'home.html', {
         'categories': categories,
         'products': all_products,
-        "user_type": user_type,
+
         'pro_variant': pro_variant,
         'cart_count': cart_count,
     })
