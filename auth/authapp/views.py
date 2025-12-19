@@ -171,7 +171,7 @@ class Checkout(View):
 
         # Customer details
         full_name = request.POST.get('full_name')
-        contact_no = int(request.POST.get('contact'))
+        contact_no = request.POST.get('contact')
         province = request.POST.get('customer_province')
         address = request.POST.get('address')
         customer_city = request.POST.get('customer_city')
