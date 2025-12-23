@@ -22,6 +22,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'authapp.apps.AuthappConfig',
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 MIDDLEWARE = [
@@ -96,9 +98,22 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Media files
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = BASE_DIR / 'media'
+from decouple import config
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': config('dstjqnz78', default=''),
+    'API_KEY': config('136811913893944', default=''),
+    'API_SECRET': config('ldQmDckOzlqbPIDJsO-0hJBceDw', default=''),
+}
 
+if os.getenv('DJANGO_DEVELOPMENT', 'True') == 'True':
+    DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+else:
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+    
 # Login URL
 LOGIN_URL = 'login'
 

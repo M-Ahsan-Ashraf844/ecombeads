@@ -145,15 +145,13 @@
                 <i
                   class="fas fa-shopping-bag text-lg text-gray-300 hover:text-pink-400"
                 ></i>
-                {% if cart_count %}
 
                 <span
                   id="cart-count"
-                  class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center"
+                  class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center "
                 >
                   {{ cart_count|default:"0" }}
                 </span>
-                {% endif %}
               </div>
             </a>
 
@@ -331,6 +329,36 @@
     </div>
 
     <script>
+      document.querySelectorAll(".add-to-cart-btn").forEach(btn => {
+  btn.addEventListener("click", function () {
+    const productId = this.dataset.productId;
+    const quantity = this.dataset.quantity || 1;
+
+    fetch("{% url 'cart_ajax' %}", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Requested-With": "XMLHttpRequest",
+      },
+      body: JSON.stringify({
+        product_id: productId,
+        quantity: quantity,
+      })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        const badge = document.getElementById("cart-count");
+        badge.innerText = data.cart_count;
+
+        // small animation
+        badge.classList.add("scale-125");
+        setTimeout(() => badge.classList.remove("scale-125"), 200);
+      }
+    })
+    .catch(err => console.error(err));
+  });
+});
       const menu = document.getElementById("mobile-menu");
       const menuBtn = document.getElementById("menu-btn");
       const closeBtn = document.getElementById("close-menu");
