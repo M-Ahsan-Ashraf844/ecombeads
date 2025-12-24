@@ -17,3 +17,9 @@ services:
         generateValue: true
       - key: DEBUG
         value: "False"
+      - key: dstjqnz78
+        sync: false
+      - key: 136811913893944
+        sync: false
+      - key: ldQmDckOzlqbPIDJsO-0hJBceDw
+        sync: false
