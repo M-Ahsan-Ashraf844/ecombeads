@@ -990,6 +990,10 @@ video {
   height: 100%;
 }
 
+.h-7 {
+  height: 1.75rem;
+}
+
 .max-h-60 {
   max-height: 15rem;
 }
@@ -1096,6 +1100,10 @@ video {
 
 .w-full {
   width: 100%;
+}
+
+.w-7 {
+  width: 1.75rem;
 }
 
 .min-w-\[600px\] {
@@ -2577,6 +2585,10 @@ video {
     height: 1.5rem;
   }
 
+  .sm\:h-8 {
+    height: 2rem;
+  }
+
   .sm\:w-24 {
     width: 6rem;
   }
@@ -2587,6 +2599,10 @@ video {
 
   .sm\:w-auto {
     width: auto;
+  }
+
+  .sm\:w-8 {
+    width: 2rem;
   }
 
   .sm\:grid-cols-2 {
